@@ -234,7 +234,7 @@ If you compile the code above, you will get something like:
 
 ```
 elf->e_indent: 
-	0x7f()
+	0x7f()
 	0x45(E)
 	0x4c(L)
 	0x46(F)
