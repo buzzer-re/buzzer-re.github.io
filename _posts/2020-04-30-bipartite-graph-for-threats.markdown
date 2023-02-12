@@ -23,7 +23,7 @@ This code was inspired in the [Malware Data Science](https://nostarch.com/malwar
 
 Bipartite graph is a graph where the vertices(nodes) can be splited in two groups and be connected to each other, that way, each vertice can have multiple connections to an specific set and can be used to determine how many nodes in a give group has an relation in another group.
 
-In this code, i extracted all samples strings of a given path, and applied a regex rule to extract possible domain names + loaded a valid [domain suffixes](domain_suffixes.txt) to create an valid dictionary to extract only correct domains from the samples.
+In this code, i extracted all samples strings of a given path, and applied a regex rule to extract possible domain names + loaded a valid domain suffixes list to create an valid dictionary to extract only correct domains from the samples.
 
 
 ```python

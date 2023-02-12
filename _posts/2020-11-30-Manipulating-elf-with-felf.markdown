@@ -122,7 +122,7 @@ As structs are just aligned bytes in memory, we can use the struct ***Elf64_Ehdr
 
 ```c
 ~ >>> ./parseheader                                                                              
-Magic: ELF
+Magic: ELF
 ```
 Knowing that, we can now parse the whole file by reading the file itself and use the ELF structs to extract the executable data itself.
 
