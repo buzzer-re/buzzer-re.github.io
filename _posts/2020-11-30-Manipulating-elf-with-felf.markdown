@@ -28,7 +28,7 @@ Imagine ELF files as a pre-fabricated home, the way the file is on disk contains
 
 The structure is the follow:
 
-![](/assets/images/felf/elf.png){:height="50%" width="50%"}
+![](/assets/images/felf/elf.png){:height="75%" width="75%"}
 
 
 Everything is pretty straight forward:
