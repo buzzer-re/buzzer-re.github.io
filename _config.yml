@@ -19,8 +19,7 @@ timezone:
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Buzzer                          # the main title
-
+title: Reversing Codes                         # the main title
 tagline: Security Researcher & Dreamer   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
