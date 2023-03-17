@@ -202,8 +202,13 @@ In the assembly code, it's possible to see that the PEB address is being pushed 
 When rebuilding a shellcode, it's important to ensure that you have all the necessary structs for the PE file and that they have the correct architecture. If you have already imported the type libraries, you can easily add the required structs by going to the 'Structure' tab, right-clicking and selecting 'Add struct type', and searching for the struct. In the case of a 32-bit shellcode, the following structs will be needed:
 
 - IMAGE_DOS_HEADER 
+<<<<<<< HEAD
 - IMAGE_NT_HEADERS32
 - IMAGE_OPTIONAL_HEADERS32
+=======
+- IMAGE_NT_HEADERS_32
+- IMAGE_OPTIONAL_HEADERS_32
+>>>>>>> d05117af948a4e714b7edcbf423cdcd565b21519
 - IMAGE_EXPORT_DIRECTORY
 - IMAGE_DATA_DIRECTORY
 
@@ -240,9 +245,13 @@ Luckly for us there is an open-source project called [HashDB](https://hashdb.ope
 
 I've choosen the `shl1_add` because this is not revil, but other algorithms may work as well (perhaps they use the same calculation). With knowledge of the algorithm, we can search for its values and determine that this checksum corresponds to the kernel32.dll module.
 
+<<<<<<< HEAD
 ||![](/assets/images/unpacking_redline/matched_hash.png)|
 |:--:|
 |Fig.20 DLL match|
+=======
+|![](/assets/images/unpacking_redline/)
+>>>>>>> d05117af948a4e714b7edcbf423cdcd565b21519
 
 Actually, there was a hash collision with the first argument, but if you open this dropdown you will find the KERNEL32.DLL in uppercase and other non-native libraries, so it must be kernel32. Repeating the same process for the second argument will reveal that it is the LoadLibraryA function!
 
@@ -251,21 +260,37 @@ Now a cool feature of HashDB is that if there is a hit on a function name from a
 
 |![](/assets/images/unpacking_redline/bulk_import.png)|
 |:--:|
+<<<<<<< HEAD
 |Fig.21 HashDB bulk import|
 
 |![](/assets/images/unpacking_redline/hashdb_enum.png)|
 |:--:|
 |Fig.22 HashDB created enum|
+=======
+|Fig.20 HashDB bulk import|
+
+|![](/assets/images/unpacking_redline/hashdb_enum.png)|
+|:--:|
+|Fig.21 HashDB created enum|
+>>>>>>> d05117af948a4e714b7edcbf423cdcd565b21519
 
 Now with all this information collected, we can change the function signature and automatically the names will be associeted to the hash values:
 
 |![](/assets/images/unpacking_redline/changingFunctionDeclaration.png)|
 |:--:|
+<<<<<<< HEAD
 |Fig.23 Changing the function signature|
 
 |![](/assets/images/unpacking_redline/discovered_resolved_names.png)|
 |:--:|
 |Fig.24 Resolved names discovered!|
+=======
+|Fig.22 Changing the function signature|
+
+|![](/assets/images/unpacking_redline/discovered_resolved_names.png)|
+|:--:|
+|Fig.23 Resolved names discovered!|
+>>>>>>> d05117af948a4e714b7edcbf423cdcd565b21519
 
 
 ## Rebuilding the Shellcode struct
@@ -278,6 +303,7 @@ Make sure to include all the necessary fields and data types based on the inform
 
 |![](/assets/images/unpacking_redline/ResolveFunctionsReversed.png)|
 |:--:|
+<<<<<<< HEAD
 |Fig.25 Shellcode struct rebuilded|
 
 So, by rebuilding the shellcode struct, we can see that it contains all the necessary functions required for its proper functioning. With this information, we can now exit the function and move on to the next steps with a newly created struct type!
@@ -342,3 +368,8 @@ Perfect! Now, let me share a helpful tip to speed up the analysis process. As me
 ***Spoiler Alert: We've successfully unpacked the final stage!***
 
 But, let's analyze the loader code (Fig.30) to gain a better understanding of how the last PE will be loaded and executed from memory. To accomplish this, we will recreate the same environment in IDA as we did with the previous shellcode. This will include loading the raw file, importing libraries and defining structs such as PEB and so on.
+=======
+|Fig.24 Shellcode struct rebuilded|
+
+So, by rebuilding the shellcode struct, we can see that it contains all the necessary functions required for its proper functioning. With this information, we can now exit the function and move on to the next steps with a newly created struct type!
+>>>>>>> d05117af948a4e714b7edcbf423cdcd565b21519
