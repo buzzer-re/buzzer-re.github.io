@@ -1,5 +1,5 @@
 ---
-title: "Manual unpacking in details"
+title: "Manual Unpacking in Details"
 date: 2023-03-20 19:10:00 -0300
 
 categories: [Reverse-Engineering]
