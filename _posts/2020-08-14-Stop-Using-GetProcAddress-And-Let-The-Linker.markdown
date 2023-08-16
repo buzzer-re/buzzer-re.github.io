@@ -1,6 +1,6 @@
 ---
 title: "Quick Tip: Stop Using GetProcAddress and Let the Linker Do the Job for You"
-date: 2023-08-14 01:00:00 -0300
+date: 2023-08-15 21:00:00 -0300
 
 categories: [Programming]
 tags: [Programming, Windows Internals]
