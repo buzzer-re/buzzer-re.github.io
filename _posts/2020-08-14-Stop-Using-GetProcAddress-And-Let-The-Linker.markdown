@@ -127,7 +127,9 @@ std::printf ( "Status %x\n", status );
 |:--:|
 |Fig.2 Using Linker keywords |
 
-By using these keywords, you're essentially telling the Microsoft Linker to focus on ntdll.lib while building your project. The `__declspec( dllimport )` keyword is optional, but it's basically telling the compiler that this function definition can be found in the [IAT](https://learn.microsoft.com/en-us/windows/win32/debug/pe-format#import-address-table), is like waving a flag, announcing that this function definition originates from another library, not your source code. 
+By using these keywords, you're essentially telling the Microsoft Linker to focus on ntdll.lib while building your project. The `#pragma comment(lib, ...)` let you specify a [static library](https://learn.microsoft.com/en-us/cpp/cppcx/static-libraries-c-cx?view=msvc-170) to be used in your project, therefore we specify the `ntdll.lib`.  
+
+The `__declspec( dllimport )` keyword is optional, but it's basically telling the compiler that this function definition can be found in the [IAT](https://learn.microsoft.com/en-us/windows/win32/debug/pe-format#import-address-table), is like waving a flag, announcing that this function definition originates from another library, not your source code. 
 
 Since these functions stem from C, rather than C++, remember to use the `extern "C"` keyword to disable the [name mangling](https://en.wikipedia.org/wiki/Name_mangling), that way the function symbol name will match exactly to the one defined in the `ntdll.lib`. Here's a tip: if you're dealing with multiple function definitions, you can gather them all in one neat block using brackets.
 
