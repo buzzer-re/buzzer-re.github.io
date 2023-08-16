@@ -85,7 +85,7 @@ To simplify the process of dealing with undocumented functions, we can make a sm
 ## Just use the `#pragma` and `__declspec` keywords
 
 
-You can make your life easier by employing the `#pragma` and `__declspec` keywords. These compiler-specific keywords tools let you tell MSVC to import a function from a DLL using the `__declspec` keyword. Additionally, you can direct the MSVC compiler to link against the ntdll.lib during compilation. This ensure that you're connected to the right library.
+You can make your life easier by employing the [#pragma](https://learn.microsoft.com/en-us/cpp/preprocessor/comment-c-cpp?view=msvc-170#lib) and [__declspec](https://learn.microsoft.com/en-us/cpp/cpp/dllexport-dllimport?view=msvc-170#remarks) keywords. These compiler-specific keywords tools let you instruct the MSVC compiler to find the `NtAllocateVirtualMemory` inside the static library `ntdll.lib`, provided my Microsoft. 
 
 ```cpp
 #pragma comment(lib, "ntdll.lib")
@@ -127,8 +127,19 @@ std::printf ( "Status %x\n", status );
 |:--:|
 |Fig.2 Using Linker keywords |
 
-By using these keywords, you're essentially telling the Microsoft Linker to focus on ntdll.lib while building your project. The `__declspec( dllimport )` keyword is like waving a flag, announcing that this function definition originates from another library, not your source code. Since these functions stem from C, rather than C++, remember to use the extern "C" keyword. Here's a tip: if you're dealing with multiple function definitions, you can gather them all in one neat block using brackets.
+By using these keywords, you're essentially telling the Microsoft Linker to focus on ntdll.lib while building your project. The `__declspec( dllimport )` keyword is optional, but it's basically telling the compiler that this function definition can be found in the [IAT](https://learn.microsoft.com/en-us/windows/win32/debug/pe-format#import-address-table), is like waving a flag, announcing that this function definition originates from another library, not your source code. 
 
+Since these functions stem from C, rather than C++, remember to use the `extern "C"` keyword to disable the [name mangling](https://en.wikipedia.org/wiki/Name_mangling), that way the function symbol name will match exactly to the one defined in the `ntdll.lib`. Here's a tip: if you're dealing with multiple function definitions, you can gather them all in one neat block using brackets.
+
+```cpp
+extern "C"
+{
+	// Your definitions
+}
+```
+
+
+***Is worth to remember that the above approach only works if the function of insterest is exported by the library(`.lib`) file that you want to use!***
 
 ## Does this works for kernel Drivers programming ?
 
@@ -143,10 +154,16 @@ extern "C" __declspec( dllimport ) NTSTATUS NTAPI ZwQuerySystemInformation (
 );
 ```
 
-The only difference here is that, since you're already working on a kernel driver, you will be using the `ntoskrnl.exe` executable as your main library. Therefore, there's no need to employ the `#pragma` keyword in this context!
+The only difference here is that, since you're already working on a kernel driver, you will be using the `ntoskrnl.exe` executable as your main library. Therefore, there's no need to employ the `#pragma` keyword in this context! Also, if you are not using `C++` to code your driver you can remove the `extern "C"` as well.
 
 ## Conclusion
 
 Well, that was a simple tip post that I found very useful. I've seen a lot of people not knowing this and using LoadLibrary (or any other) + GetProcAddress all the time. There are a lot of interesting features in these keywords that are worth taking a look at.
 
-Thanks
+
+Thanks!
+
+--------
+
+08/16/2023 - Edit
+	- Fix some concepts related to the compiler-specific keywords and the linking process, thanks [@cxiao](https://github.com/cxiao) to let me know about it.
