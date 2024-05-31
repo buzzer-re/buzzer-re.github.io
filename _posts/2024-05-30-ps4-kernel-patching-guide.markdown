@@ -1,5 +1,5 @@
 ---
-title: "How to patch the running kernel properly on the PS4 (Practical example)"
+title: "How to patch the running PlayStation 4 kernel"
 date: 2024-05-30 00:00:00 -0300
 
 categories: [Console Hacking]
