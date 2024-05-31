@@ -87,8 +87,6 @@ __writecr0(cr0); // restore the original cr0
 
 To patch it, you can treat the kernel image as a regular `uint8_t*` buffer or something similar, and simply write the required opcodes into it.
 
-Example:
-
 
 ## Links & resources
  
