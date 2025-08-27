@@ -20,13 +20,13 @@ This is a begin of a series of articles that I plan to release over the time, th
 
 ## PlayStation 5 Overall Security
 
-Unlike its predecessor, the PS4, the PS5 has implemented several new protection measures that make certain tasks more difficult. In particular, the hypervisor prevents many types of modifications to the console firmware by proactively enforcing memory integrity and restricting access to low-level system features. This makes kernel-level exploitation and firmware patching significantly harder, even after achieving code execution in user space.
+Unlike its predecessor, the PS4, the PS5 has implemented several new protection measures that make certain tasks more difficult. In particular, the hypervisor prevents many types of modifications to the console firmware by proactively enforcing memory integrity and restricting access to low-level system features. This makes kernel-level exploitation and firmware patching significantly harder, even after achieving code execution in kernel space.
 
 The hypervisor implement a feature called "XOM"(eXecute-Only-Memory), in short terms, it avoids that the `.text` can be read or written and can only be executed. Not only that, some techniques that envolve clear the `WP` bit from the `CR0` register are also useless, since modifiying such bits does generate an `vmexit` in the HV, that will endup by crashing the console for security (only the WP bit is protect, you can write in the others).
 
 Another feature is the `SMEP`, on the `CR4`, which protects against execution of usermode pages in kernel mode. Modification/disable on this one also generate an `vmexit` in the HV.
 
-With this mechanisms, the PS5 also don't allocated RWX in usermode from the `mmap` syscall. Which means that even if you could ROP in usermode, you are unable to execute any other thing. 
+With this mechanisms, the PS5 also don't allocated RWX in usermode from the `mmap` syscall. Which means that even if you could ROP in usermode, you are unable (in theory) to request new RWX memory pages to execute any other thing. 
 
 This security features will be detailed in future articles, but this already gives you an idea of the overall difficult of performing firmware level modifications that may allow the requesting of rwx memory in usermode or to modify any kind of process creation variables (patching the `exec` or `mmap`)
 
@@ -79,7 +79,7 @@ struct proc* find_proc_by_name(const char* proc_name)
 
 The example above was extract by a wrapper that I've [wrote](https://github.com/buzzer-re/NineS/blob/main/src/proc.c) to interact with such kernel data structures, it will use the `kernel_copyout` function that encapuled the Read primitive from the kernel exploit, to extract the first entry of the `proc` linked list (1), therefore to read every entry it will need to also perform another Kernel read (2). When a give entry is found by some process name, it will return the copied `proc` structure.
 
-It's worth notice that will such wrappers, it's easy to list all the current processes running in the system and it's PIDs, as a matter of example here's the code that does that (also in the same file):
+It's worth notice that with such wrappers, it's easy to list all the current processes running in the system and it's PIDs, as a matter of example here's the code that does that (also in the same file):
 
 ```c
 void list_all_proc_and_pid()
@@ -107,9 +107,9 @@ The code is self explainatory, and it's outputs the following text into the [klo
 
 |![](/assets/images/playstation-5-elf-injection/list_procs.png)|
 |:--:|
-|List of current running processes name, pid and the `proc` entry in the kernel|
+|List of current running processes name, pid and the `proc` address entry in the kernel|
 
-## Elevanting process privileges
+## Elevanting process privileges (Review)
 
 To elevate process privileges on the system, the method is the same as on FreeBSD: we set the `cr_uid` to `0` (root), along with all other fields related to the current user level or ID.
 However, there's another caveat specific to the PS5, the AuthIDs. These are part of a permissions system unique to PlayStation that manages special capabilities, such as the ability to use debug syscalls like `ptrace` and `mdbg` (more on this later). These also need to be set accordingly.
