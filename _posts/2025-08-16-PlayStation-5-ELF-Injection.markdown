@@ -111,7 +111,9 @@ The code is self explainatory, and it's outputs the following text into the [klo
 
 ## Elevanting process privileges
 
-To elevete the process privileges on the system, is done the same as on the FreeBSD, we set the `cr_uid` as `0` (root) and all other fields related to the current user level/ID as well. There's another caveat, specifically from the PS5 that is the AuthID's, which are a permissions system specifically for the PlayStation that manages special capabilities, such as use debug syscalls such as the `ptrace` and the `mdbg` (more about this later), this also need to be set.
+To elevate process privileges on the system, the method is the same as on FreeBSD: we set the `cr_uid` to `0` (root), along with all other fields related to the current user level or ID.
+However, there's another caveat specific to the PS5, the AuthIDs. These are part of a permissions system unique to PlayStation that manages special capabilities, such as the ability to use debug syscalls like `ptrace` and `mdbg` (more on this later). These also need to be set accordingly.
+
 
 ```c
 
@@ -152,9 +154,9 @@ uint8_t* jailbreak_process(pid_t pid)
 }
 ```
 
-Using the Kernel RW primitives, and the `proc` offset, we can easily extract this specific structure from the PS5's kernel and patch it, since it's mapped into a RW segment (Writing into R-only segment is also possible with DMA/MMMIO, but this is a topic for another article). 
+Using kernel R/W primitives and the `proc` offset, we can easily extract this specific structure from the PS5's kernel and patch it, since it’s mapped into a read-write (RW) segment. (Writing into read-only segments is also possible using DMA/MMIO, but that’s a topic for another article.)
 
-With this, the process already userland `root` capabilities, we can even say that the process is `jailbroken`.
+With this, the process already has userland root capabilities we could even say that the process is jailbroken.
 
 # Request usermode executable memory
 
