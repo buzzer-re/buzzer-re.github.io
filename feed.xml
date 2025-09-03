@@ -1,0 +1,201 @@
+
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>https://reversing.codes/</id>
+  <title>Reversing codes</title>
+  <subtitle>A simple blog to post any subject that I may find useful to share :)</subtitle>
+  <updated>2025-09-03T13:01:23-03:00</updated>
+  <author>
+    <name>Buzzer</name>
+    <uri>https://reversing.codes/</uri>
+  </author>
+  <link rel="self" type="application/atom+xml" href="https://reversing.codes/feed.xml"/>
+  <link rel="alternate" type="text/html" hreflang="en"
+    href="https://reversing.codes/"/>
+  <generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator>
+  <rights> © 2025 Buzzer </rights>
+  <icon>/assets/img/favicons/favicon.ico</icon>
+  <logo>/assets/img/favicons/favicon-96x96.png</logo>
+
+
+  
+  <entry>
+    <title>Usermode ELF injection on the PlayStation 5</title>
+    <link href="https://reversing.codes/posts/PlayStation-5-ELF-Injection/" rel="alternate" type="text/html" title="Usermode ELF injection on the PlayStation 5" />
+    <published>2025-09-03T00:00:00-03:00</published>
+  
+    <updated>2025-09-03T12:41:29-03:00</updated>
+  
+    <id>https://reversing.codes/posts/PlayStation-5-ELF-Injection/</id>
+    <content src="https://reversing.codes/posts/PlayStation-5-ELF-Injection/" />
+    <author>
+      <name>Buzzer</name>
+    </author>
+
+  
+    
+    <category term="Console Hacking" />
+    
+  
+
+  
+    <summary>
+      
+
+
+
+
+
+      ELF injection is crucial for developing complex homebrew applications, helping with debugging and instrumentation during security research, and specially for extending application capabilities, such as enhancing the UI or creating internal mods for your favorite games.
+
+There are a few protections and permission restrictions that prevent simple tasks, such as requesting executable memory pages ...
+    </summary>
+  
+
+  </entry>
+
+  
+  <entry>
+    <title>How to patch the running PlayStation 4 kernel</title>
+    <link href="https://reversing.codes/posts/ps4-kernel-patching-guide/" rel="alternate" type="text/html" title="How to patch the running PlayStation 4 kernel" />
+    <published>2024-05-30T00:00:00-03:00</published>
+  
+    <updated>2024-05-31T00:52:33-03:00</updated>
+  
+    <id>https://reversing.codes/posts/ps4-kernel-patching-guide/</id>
+    <content src="https://reversing.codes/posts/ps4-kernel-patching-guide/" />
+    <author>
+      <name>Buzzer</name>
+    </author>
+
+  
+    
+    <category term="Console Hacking" />
+    
+  
+
+  
+    <summary>
+      
+
+
+
+
+
+      One of the first tasks when hacking into the PlayStation kernel is to apply proper patches. Perhaps enabling the UART for better logging using serial COM, enabling user/kernel address access, or even enabling the MAP_SELF flag support into the mmap syscall, which can be used to decrypt native modules using the SAMU behind the scenes.
+
+The first step is actually acquiring the kernel. You can do ...
+    </summary>
+  
+
+  </entry>
+
+  
+  <entry>
+    <title>Quick Tip: Stop Using GetProcAddress and Let the Linker Do the Job for You</title>
+    <link href="https://reversing.codes/posts/Stop-Using-GetProcAddress-And-Let-The-Linker/" rel="alternate" type="text/html" title="Quick Tip: Stop Using GetProcAddress and Let the Linker Do the Job for You" />
+    <published>2023-08-15T21:00:00-03:00</published>
+  
+    <updated>2023-08-16T09:52:37-03:00</updated>
+  
+    <id>https://reversing.codes/posts/Stop-Using-GetProcAddress-And-Let-The-Linker/</id>
+    <content src="https://reversing.codes/posts/Stop-Using-GetProcAddress-And-Let-The-Linker/" />
+    <author>
+      <name>Buzzer</name>
+    </author>
+
+  
+    
+    <category term="Programming" />
+    
+  
+
+  
+    <summary>
+      
+
+
+
+
+
+      For a long time, Linux was my primary subject of study. I didn’t find Windows internals particularly interesting until I took on a malware analysis task. It was during this task that I began to appreciate the world of Reverse Engineering on the Windows platform, largely due to the abundance of resources and tools available. Unlike Linux, where everything is open source and accessible through th...
+    </summary>
+  
+
+  </entry>
+
+  
+  <entry>
+    <title>Designing a Malware Loader detector with Guard Violation Exceptions</title>
+    <link href="https://reversing.codes/posts/Detecting-injected-code-with-page-guards/" rel="alternate" type="text/html" title="Designing a Malware Loader detector with Guard Violation Exceptions" />
+    <published>2023-07-11T10:52:00-03:00</published>
+  
+    <updated>2023-07-11T10:52:00-03:00</updated>
+  
+    <id>https://reversing.codes/posts/Detecting-injected-code-with-page-guards/</id>
+    <content src="https://reversing.codes/posts/Detecting-injected-code-with-page-guards/" />
+    <author>
+      <name>Buzzer</name>
+    </author>
+
+  
+    
+    <category term="Malware-Research" />
+    
+  
+
+  
+    <summary>
+      
+
+
+
+
+
+      Recently, I made the decision to finally publish my tool focused on unpacking, called Shinigami. The idea for Shinigami came to me two years ago, but I never actually implemented it until now. Initially, it was designed to dump implants injected via process hollowing. However, I also added support for generic malware loaders that implement manual mapping or shellcode injection. All of this is m...
+    </summary>
+  
+
+  </entry>
+
+  
+  <entry>
+    <title>Manual Unpacking in Details</title>
+    <link href="https://reversing.codes/posts/Manual-unpacking-in-details/" rel="alternate" type="text/html" title="Manual Unpacking in Details" />
+    <published>2023-03-20T19:10:00-03:00</published>
+  
+    <updated>2023-07-11T18:31:39-03:00</updated>
+  
+    <id>https://reversing.codes/posts/Manual-unpacking-in-details/</id>
+    <content src="https://reversing.codes/posts/Manual-unpacking-in-details/" />
+    <author>
+      <name>Buzzer</name>
+    </author>
+
+  
+    
+    <category term="Reverse-Engineering" />
+    
+  
+
+  
+    <summary>
+      
+
+
+
+
+
+      
+
+Wow, it’s been more than two years since my last blog post. Time flies! But now, in 2023, I am eager to start filling this blog with cool and useful content, and I hope to maintain it for a long time.
+
+As a welcome back post, I want to share an unpacking of a random sample of the Redline stealer that I found inside Malware Bazaar. The purpose of this post is not to analyze the malware, but ra...
+    </summary>
+  
+
+  </entry>
+
+</feed>
+
+
