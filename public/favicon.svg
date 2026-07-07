@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- horizontally mirrored "R" — a nod to reverse engineering -->
+  <g transform="translate(32 0) scale(-1 1)" fill="none" stroke="#ffffff"
+     stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 25 V7 H17.5 A4.75 4.75 0 0 1 17.5 16.5 H12"/>
+    <path d="M13 16 L21 25"/>
+  </g>
+</svg>
