@@ -1,21 +1,14 @@
-# hidden files
-.*
-!.git*
-!.editorconfig
-!.nojekyll
-!.husky
-!.commitlintrc.json
-!.versionrc.json
-!.stylelintrc.json
+# build output
+dist/
+.astro/
 
-# bundler cache
-_site
-vendor
-Gemfile.lock
+# dependencies
+node_modules/
 
-# rubygem
-*.gem
+# logs / env
+npm-debug.log*
+.env
+.env.production
 
-# npm dependencies
-node_modules
-package-lock.json
+# os
+.DS_Store

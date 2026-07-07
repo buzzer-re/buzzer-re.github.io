@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { formatDate, isoDate, tagSlug } from '../../utils';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  const map = new Map<string, { label: string; posts: typeof posts }>();
+
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      const slug = tagSlug(tag);
+      if (!map.has(slug)) map.set(slug, { label: tag, posts: [] });
+      map.get(slug)!.posts.push(post);
+    }
+  }
+
+  return Array.from(map.entries()).map(([slug, { label, posts }]) => ({
+    params: { tag: slug },
+    props: {
+      label,
+      posts: posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
+    },
+  }));
+}
+
+const { label, posts } = Astro.props;
+---
+
+<BaseLayout title={`#${Astro.params.tag}`} description={`Writing tagged ${label}.`}>
+  <div class="measure">
+    <p class="eyebrow">tag</p>
+    <h1 class="tag-title mono">#{Astro.params.tag}</h1>
+    <p class="muted">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
+
+    <ul class="tag-list">
+      {
+        posts.map((post) => (
+          <li>
+            <a href={`/posts/${post.id}`}>
+              <span class="t">{post.data.title}</span>
+              <time class="d mono" datetime={isoDate(post.data.date)}>
+                {formatDate(post.data.date)}
+              </time>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="mono" style="font-size:0.8rem;margin-top:2rem;">
+      <a href="/tags">← all tags</a>
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .tag-title { font-size: 1.8rem; margin: 0.4rem 0 0.2rem; }
+  .tag-list { list-style: none; margin: 2rem 0 0; padding: 0; }
+  .tag-list li { border-top: 1px solid var(--rule); }
+  .tag-list li:last-child { border-bottom: 1px solid var(--rule); }
+  .tag-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.65rem 0;
+    color: var(--ink);
+  }
+  .tag-list a:hover { text-decoration: none; }
+  .tag-list a:hover .t { color: var(--accent); }
+  .t { transition: color 0.2s ease; }
+  .d { color: var(--muted); font-size: 0.74rem; white-space: nowrap; }
+  @media (max-width: 34rem) {
+    .tag-list a { flex-direction: column; gap: 0.1rem; }
+  }
+</style>

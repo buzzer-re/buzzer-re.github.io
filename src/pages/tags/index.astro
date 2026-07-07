@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { tagSlug } from '../../utils';
+
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const counts = new Map<string, { label: string; count: number }>();
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    const slug = tagSlug(tag);
+    const entry = counts.get(slug) ?? { label: tag, count: 0 };
+    entry.count += 1;
+    counts.set(slug, entry);
+  }
+}
+const tags = Array.from(counts.entries()).sort((a, b) => b[1].count - a[1].count);
+---
+
+<BaseLayout title="Tags" description="Browse writing by topic.">
+  <div class="measure">
+    <p class="eyebrow">index</p>
+    <h1>Tags</h1>
+    <p class="muted">Browse by topic.</p>
+
+    <div class="cloud">
+      {
+        tags.map(([slug, { count }]) => (
+          <a class="tag mono" href={`/tags/${slug}`}>
+            #{slug} <span class="n">{count}</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 2rem;
+  }
+  .tag {
+    font-size: 0.82rem;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--ink-soft);
+    background: var(--surface);
+    transition: all 0.2s ease;
+  }
+  .tag:hover {
+    text-decoration: none;
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .tag .n { color: var(--muted); }
+</style>

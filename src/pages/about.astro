@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../consts';
+---
+
+<BaseLayout title="About" description={SITE.description}>
+  <article class="prose measure">
+    <p class="eyebrow">about</p>
+    <h1>Anderson (Buzzer)</h1>
+
+    <p>
+      I'm a security researcher and programmer. On this website I intend to share
+      my writings on security research topics such as reverse engineering
+      techniques, malware analysis, OS internals and automation. Currently I'm
+      interested in studying machine learning topics, mathematics and deep learning
+      algorithms, which may arise in some future posts too. Feel free to contact me
+      on my X. I share every piece of code on GitHub, which you may find useful on
+      your journey towards truth.
+    </p>
+
+    <ul class="links">
+      <li><a href={SITE.socials.github} rel="me">github.com/buzzer-re</a></li>
+      <li><a href={SITE.socials.twitter} rel="me">twitter / x — @buzz3r_</a></li>
+      <li><a href="/feed.xml">rss</a></li>
+    </ul>
+  </article>
+</BaseLayout>
+
+<style>
+  h1 { font-size: 1.9rem; margin: 0.4rem 0 1.25rem; }
+  .links {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+  }
+  .links li { padding: 0.35rem 0; }
+</style>

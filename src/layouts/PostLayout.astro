@@ -1,0 +1,62 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { formatDate, isoDate, tagSlug } from '../utils';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+const { post } = Astro.props;
+const { title, date, description, tags } = post.data;
+---
+
+<BaseLayout title={title} description={description} type="article">
+  <article class="prose measure">
+    <p class="eyebrow">
+      <a href="/" style="color:inherit;text-decoration:none;">writing</a> &nbsp;/&nbsp;
+      <time datetime={isoDate(date)}>{formatDate(date)}</time>
+    </p>
+
+    <h1>{title}</h1>
+
+    {
+      tags.length > 0 && (
+        <p class="post-tags mono">
+          {tags.map((t) => (
+            <a href={`/tags/${tagSlug(t)}`}>#{tagSlug(t)}</a>
+          ))}
+        </p>
+      )
+    }
+
+    <div class="post-body">
+      <slot />
+    </div>
+
+    <hr />
+    <p class="mono" style="font-size:0.8rem;">
+      <a href="/">← back to all writing</a>
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose h1 {
+    font-size: 2.15rem;
+    margin: 0.6rem 0 0.4rem;
+    line-height: 1.15;
+  }
+  .post-tags {
+    font-size: 0.78rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin: 0 0 2.5rem;
+  }
+  .post-tags a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .post-tags a:hover { color: var(--accent); }
+  .eyebrow a:hover { color: var(--accent); }
+</style>

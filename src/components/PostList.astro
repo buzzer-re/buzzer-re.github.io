@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import { formatDate, isoDate } from '../utils';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+// group by year, preserving descending order
+const groups: { year: number; posts: typeof posts }[] = [];
+for (const post of posts) {
+  const year = post.data.date.getUTCFullYear();
+  let group = groups.find((g) => g.year === year);
+  if (!group) {
+    group = { year, posts: [] };
+    groups.push(group);
+  }
+  group.posts.push(post);
+}
+---
+
+<div class="post-list">
+  {
+    groups.map((group) => (
+      <section class="year-group">
+        <h2 class="year">{group.year}</h2>
+        <ul>
+          {group.posts.map((post) => (
+            <li>
+              <a class="entry" href={`/posts/${post.id}`}>
+                <span class="entry-title">{post.data.title}</span>
+                <time class="entry-date mono" datetime={isoDate(post.data.date)}>
+                  {formatDate(post.data.date)}
+                </time>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</div>
+
+<style>
+  .post-list { margin-top: 1rem; }
+  .year-group {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: 0.5rem 1.5rem;
+    padding: 1.6rem 0;
+    border-top: 1px solid var(--rule);
+  }
+  .year-group:last-child { border-bottom: 1px solid var(--rule); }
+  .year {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--muted);
+    margin: 0.35rem 0 0;
+    letter-spacing: 0.04em;
+  }
+  .year-group ul { list-style: none; margin: 0; padding: 0; }
+  .year-group li { margin: 0; }
+  .entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .entry:hover { text-decoration: none; }
+  .entry:hover .entry-title { color: var(--accent); }
+  .entry-title {
+    font-size: 1.08rem;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+  }
+  .entry-date {
+    flex-shrink: 0;
+    font-size: 0.74rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  @media (max-width: 34rem) {
+    .year-group { grid-template-columns: 1fr; gap: 0.25rem; }
+    .year { margin-bottom: 0.4rem; }
+    .entry { flex-direction: column; gap: 0.1rem; }
+  }
+</style>
